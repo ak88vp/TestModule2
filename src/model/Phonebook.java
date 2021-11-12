@@ -8,7 +8,7 @@ public class Phonebook {
     private String club;
     private String numberPhone;
     private String email;
-    private final static Phonebook instance= new Phonebook();
+    private final static Phonebook instance = new Phonebook();
 
     public void setEmail(String email) {
         this.email = email;
@@ -18,9 +18,10 @@ public class Phonebook {
         return email;
     }
 
-    public static Phonebook getInstance(){
+    public static Phonebook getInstance() {
         return instance;
     }
+
     public String getNumberPhone() {
         return numberPhone;
     }
@@ -29,14 +30,14 @@ public class Phonebook {
         this.numberPhone = numberPhone;
     }
 
-    public Phonebook(String name, String dateOfBirth, String sex, String address, String club, String numberPhone,String email) {
+    public Phonebook(String name, String dateOfBirth, String sex, String address, String club, String numberPhone, String email) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.address = address;
         this.club = club;
-        this.numberPhone=numberPhone;
-        this.email=email;
+        this.numberPhone = numberPhone;
+        this.email = email;
     }
 
     private Phonebook() {
@@ -90,8 +91,8 @@ public class Phonebook {
                 ", Giới tính'" + sex + '\'' +
                 ", Địa chỉ'" + address + '\'' +
                 ", Nhóm danh bạ '" + club + '\'' +
-                ", Số điện thoại '" + numberPhone + '\''+
-                ", Email '" + email + '\''+
+                ", Số điện thoại '" + numberPhone + '\'' +
+                ", Email '" + email + '\'' +
                 '}';
     }
 }

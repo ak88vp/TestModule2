@@ -15,16 +15,7 @@ public class MenuPhoneBook {
         ManagerPhonebook managerPhonebook = getManagerPhonebook();
         int choice = 88;
         while (choice != 8) {
-            System.out.println("------CHƯƠNG TRÌNH QUẢN LÝ DANH BẠ--------");
-            System.out.println(" 1 : Xem danh sách");
-            System.out.println(" 2 : Thêm mới");
-            System.out.println(" 3 : Cập nhập");
-            System.out.println(" 4 : Xóa");
-            System.out.println(" 5 : Tìm kiếm");
-            System.out.println(" 6 : Ghi từ file");
-            System.out.println(" 7 : Hiển thị danh bạ trong file");
-            System.out.println(" 8 : Thoát");
-            System.out.println(" Chọn chức năng :");
+            showMenu();
             choice = scanner.nextInt();
             switch (choice) {
                 case 1:
@@ -42,28 +33,18 @@ public class MenuPhoneBook {
                     readFile();
                     break;
                 case 4:
-                    System.out.println("Nhập tên người mà bạn muốn xóa trong danh bạ");
-                    scanner.nextLine();
-                    String nameDelete = scanner.nextLine();
-                    if (managerPhonebook.find(nameDelete) != -1) {
-                        managerPhonebook.delete(nameDelete);
-                        writer(managerPhonebook);
-                        readFile();
-                    } else System.out.println("Danh bạ không có người này");
+                    delete(scanner, managerPhonebook);
+                    writer(managerPhonebook);
+                    readFile();
                     break;
                 case 5:
-                    System.out.println("Nhập tên người mà bạn muốn tìm trong danh bạ");
-                    scanner.nextLine();
-                    String nameFind = scanner.nextLine();
-                    if (managerPhonebook.find(nameFind) != -1) {
-                        managerPhonebook.findName(nameFind);
-                    } else System.out.println("Danh bạ không có người này");
+                    find(scanner, managerPhonebook);
                     break;
                 case 6:
                     writer(managerPhonebook);
                     break;
                 case 7:
-                    print();
+                    printAll();
                     break;
 
 
@@ -72,7 +53,42 @@ public class MenuPhoneBook {
         }
     }
 
-    private static void print() {
+    private static void find(Scanner scanner, ManagerPhonebook managerPhonebook) {
+        System.out.println("Nhập tên người mà bạn muốn tìm trong danh bạ");
+        scanner.nextLine();
+        String nameFind = scanner.nextLine();
+        boolean hadFound = managerPhonebook.find(nameFind) != -1;
+        if (hadFound) {
+            managerPhonebook.findName(nameFind);
+        } else System.out.println("Danh bạ không có người này");
+    }
+
+    private static void delete(Scanner scanner, ManagerPhonebook managerPhonebook) {
+        System.out.println("Nhập tên người mà bạn muốn xóa trong danh bạ");
+        scanner.nextLine();
+        String nameDelete = scanner.nextLine();
+        boolean hadFound = managerPhonebook.find(nameDelete) != -1;
+        if (hadFound) {
+            managerPhonebook.delete(nameDelete);
+            writer(managerPhonebook);
+            readFile();
+        } else System.out.println("Danh bạ không có người này");
+    }
+
+    private static void showMenu() {
+        System.out.println("------CHƯƠNG TRÌNH QUẢN LÝ DANH BẠ--------");
+        System.out.println(" 1 : Xem danh sách");
+        System.out.println(" 2 : Thêm mới");
+        System.out.println(" 3 : Cập nhập");
+        System.out.println(" 4 : Xóa");
+        System.out.println(" 5 : Tìm kiếm");
+        System.out.println(" 6 : Ghi từ file");
+        System.out.println(" 7 : Hiển thị danh bạ trong file");
+        System.out.println(" 8 : Thoát");
+        System.out.println(" Chọn chức năng :");
+    }
+
+    private static void printAll() {
         try (FileReader fileReader2 = new FileReader("PhoneBook.csv")) {
             BufferedReader bufferedReader2 = new BufferedReader(fileReader2);
             String str3;
@@ -115,7 +131,8 @@ public class MenuPhoneBook {
         System.out.println("Nhập số điện thoại mà bạn muốn sửa trong danh bạ");
         scanner.nextLine();
         String numberEdit = scanner.nextLine();
-        if (managerPhonebook.findNumber(numberEdit) != -1) {
+        boolean hadFound = managerPhonebook.findNumber(numberEdit) != -1;
+        if (hadFound) {
             System.out.println("Thêm tên :");
             scanner.nextLine();
             String newName = scanner.nextLine();
