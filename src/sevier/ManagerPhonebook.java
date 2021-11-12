@@ -3,6 +3,7 @@ package sevier;
 import model.Phonebook;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ManagerPhonebook implements manager<Phonebook> {
     ArrayList<Phonebook> listPhonebook = new ArrayList<>();
@@ -20,9 +21,14 @@ public class ManagerPhonebook implements manager<Phonebook> {
 
     @Override
     public void print() {
-        for (Phonebook listPhonebook:listPhonebook
-             ) {
-            System.out.println(listPhonebook);
+        for (int i = 0; i < listPhonebook.size(); i++) {
+            if(i % 5 == 0 && i!=0){
+                Scanner scanner=new Scanner(System.in);
+                System.out.println("Enter để hiển thị thêm");
+                String next=scanner.nextLine();
+            }
+            System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s1", listPhonebook.get(i).getName(), listPhonebook.get(i).getNumberPhone(), listPhonebook.get(i).getSex(), listPhonebook.get(i).getDateOfBirth(), listPhonebook.get(i).getAddress(), listPhonebook.get(i).getClub(), listPhonebook.get(i).getEmail());
+            System.out.println();
         }
     }
 
@@ -59,6 +65,14 @@ public class ManagerPhonebook implements manager<Phonebook> {
                 System.out.println(phonebook.getName());
             }
         }
+    }
+    public int findNumber(String number) {
+        for (int i = 0; i < listPhonebook.size(); i++) {
+            if(listPhonebook.get(i).getNumberPhone().equals(number)){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

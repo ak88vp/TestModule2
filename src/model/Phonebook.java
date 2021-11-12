@@ -9,6 +9,15 @@ public class Phonebook {
     private String numberPhone;
     private String email;
     private final static Phonebook instance= new Phonebook();
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public static Phonebook getInstance(){
         return instance;
     }

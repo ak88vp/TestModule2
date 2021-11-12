@@ -6,13 +6,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class MenuPhoneBook {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-
     public static void main(String[] args) {
+        readFile();
         Scanner scanner = new Scanner(System.in);
         ManagerPhonebook managerPhonebook = getManagerPhonebook();
         int choice = 88;
@@ -24,14 +22,14 @@ public class Main {
             System.out.println(" 4 : Xóa");
             System.out.println(" 5 : Tìm kiếm");
             System.out.println(" 6 : Ghi từ file");
-            System.out.println(" 7 : Đọc vào file");
+            System.out.println(" 7 : Hiển thị danh bạ trong file");
             System.out.println(" 8 : Thoát");
             System.out.println(" Chọn chức năng :");
             choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-//                    ManagerPhonebook.getInstance().print();
-                    print();
+                    readFile();
+                   managerPhonebook.print();
                     break;
                 case 2:
                     add(scanner, managerPhonebook);
@@ -96,11 +94,12 @@ public class Main {
         try {
             FileWriter fileWriter = new FileWriter("PhoneBook.csv");
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            String str = "Tên , Ngày tháng năm sinh,Giới tính,Địa chỉ, Nhóm,Số điện thoại";
+            String str = "Tên , Ngày tháng năm sinh,Giới tính,Địa chỉ, Nhóm,Số điện thoại,Email";
             for (int j = 0; j < managerPhonebook.getListPhonebook().size(); j++) {
                 str += "\n" + managerPhonebook.getListPhonebook().get(j).getName() + "," + managerPhonebook.getListPhonebook().get(j).getDateOfBirth() + "," +
                         managerPhonebook.getListPhonebook().get(j).getSex() + "," + managerPhonebook.getListPhonebook().get(j).getAddress() + ","
-                        + managerPhonebook.getListPhonebook().get(j).getClub() + "," + managerPhonebook.getListPhonebook().get(j).getNumberPhone();
+                        + managerPhonebook.getListPhonebook().get(j).getClub() + "," + managerPhonebook.getListPhonebook().get(j).getNumberPhone()
+                        + "," + managerPhonebook.getListPhonebook().get(j).getEmail();
             }
             bufferedWriter.write(str);
             bufferedWriter.close();
@@ -108,15 +107,15 @@ public class Main {
         }
     }
 
-    private static ManagerPhonebook getManagerPhonebook() {
+    public static ManagerPhonebook getManagerPhonebook() {
         return ManagerPhonebook.getInstance();
     }
 
-    private static void update(Scanner scanner, ManagerPhonebook managerPhonebook) {
-        System.out.println("Nhập tên người mà bạn muốn sửa trong danh bạ");
+    public static void update(Scanner scanner, ManagerPhonebook managerPhonebook) {
+        System.out.println("Nhập số điện thoại mà bạn muốn sửa trong danh bạ");
         scanner.nextLine();
-        String nameEdit = scanner.nextLine();
-        if (managerPhonebook.find(nameEdit) != -1) {
+        String numberEdit = scanner.nextLine();
+        if (managerPhonebook.findNumber(numberEdit) != -1) {
             System.out.println("Thêm tên :");
             scanner.nextLine();
             String newName = scanner.nextLine();
@@ -135,19 +134,18 @@ public class Main {
                     System.out.println("Nhập email :");
                     String newEmail = scanner.nextLine();
                     if (Regex.validateEmail(newEmail)) {
-                        managerPhonebook.edit(nameEdit, new Phonebook(newName, newDateOfBirth, newSex, newAddress, newClub, newNumberPhone, newEmail));
+                        managerPhonebook.edit(numberEdit, new Phonebook(newName, newDateOfBirth, newSex, newAddress, newClub, newNumberPhone, newEmail));
                         System.out.println("Sửa thành công");
                     }
-
                     return;
                 } else System.out.println("Sai số điện thoại");
                 return;
             } else System.out.println("Sai định dạng ngày tháng");
             return;
-        } else System.out.println("Không tìm thấy người này trong danh bạ");
+        } else System.out.println("Không tìm thấy số điện thoại này trong danh bạ");
     }
 
-    private static void add(Scanner scanner, ManagerPhonebook managerPhonebook) {
+    public static void add(Scanner scanner, ManagerPhonebook managerPhonebook) {
         System.out.println("Thêm tên :");
         scanner.nextLine();
         String name = scanner.nextLine();
